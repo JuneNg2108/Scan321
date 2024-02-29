@@ -182,3 +182,56 @@ header {
     justify-content: center;
     align-items: center;
 }
+
+
+
+
+/* Product info box styles */
+.product-info-box {
+  display: none;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: #fff;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  z-index: 1000; /* Ensure it appears above other elements */
+  max-width: 80%;
+}
+
+/* Close button styles */
+.close-btn {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  font-size: 24px;
+  cursor: pointer;
+  color: #999;
+}
+
+/* Product name styles */
+#productName {
+  margin-top: 10px;
+  font-size: 20px;
+}
+
+/* Product image styles */
+#productImage {
+  display: block;
+  margin: 20px auto;
+  max-width: 100%;
+  height: auto;
+}
+
+/* Product price styles */
+#productPrice {
+  font-size: 16px;
+}
+
+/* Product description styles */
+#productDescription {
+  margin-top: 10px;
+  font-size: 16px;
+}
