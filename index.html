@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Barcode Scanner</title>
+  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" integrity="sha512-..." crossorigin="anonymous" />
+  <script src="BanLe.js" defer></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/quagga/0.12.1/quagga.min.js"></script>
+
+</head>
+<body>
+  <header>
+    <h1>Kiểm tra giá sản phẩm</h1>
+  </header>
+
+  <div class="spacer"></div> <!-- Space below the header -->
+
+  <div class="search-container">
+    <input type="text" id="searchInput" placeholder="Tên sản phẩm / Mã Sản Phẩm">
+    <button><i class="fas fa-search"></i></button> <!-- Font Awesome search icon -->
+    <div id="searchResults" class="search-results"></div> <!-- Search results container -->
+</div>
+
+<div id="searchResults" class="search-results"></div> <!-- Search results container -->
+
+  <div class="spacer"></div> 
+
+  <div class="scanning-container">
+    <div id="scanner-container"></div>
+</div>
+
+
+  <div class="scanner-button-container">
+    <button id="startScanBtn">Bắt đầu quét</button>
+  </div>
+
+<!-- Cart container -->
+<div class="cart-container">
+    <!-- Title -->
+    <i class="fas fa-shopping-cart"></i> <!-- Font Awesome cart icon -->
+    <div class="cart-title">
+        <h2>Giỏ Hàng</h2>
+    </div>
+    <!-- Cart icon and item count -->
+    <div class="cart-icon-container">
+        <div class="item-count-circle">0</div> <!-- Circle to display item count -->
+    </div>
+</div>
+
+  
+  
+  
+
+  
+</body>
+</html>

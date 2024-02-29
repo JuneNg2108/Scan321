@@ -1,0 +1,192 @@
+body {
+    background-color: #f5f5f5; /* Light gray background */
+  }
+  
+  
+/* Header styles */
+header {
+    background: linear-gradient(135deg, #5f27cd, #ffbc2d); /* Gradient from purple to yellow */
+    color: white;
+    padding: 20px;
+    text-align: center;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2); /* Shadow effect */
+    transition: all 0.3s ease; /* Smooth transition for hover effect */
+  }
+  
+  
+  header:hover {
+    transform: translateY(-2px); /* Move header slightly up on hover */
+  }
+  
+  header h1 {
+    margin: 0;
+    font-size: 32px; /* Slightly larger font size */
+  }
+  
+  /* Space below the header */
+  .spacer {
+    height: 20px;
+  }
+  
+  .search-container {
+    position: relative; /* Ensure the search results are positioned relative to this container */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .search-container input[type="text"] {
+    padding: 10px;
+    width: 300px;
+    border: 2px solid #5f27cd; /* Purple border */
+    border-radius: 30px; /* Border radius to make it elliptical */
+    outline: none;
+    font-size: 16px;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease; /* Smooth transition for border color and box shadow */
+  }
+  .search-container input[type="text"]::placeholder {
+    color: #999; /* Placeholder color */
+  }
+  
+  .search-container input[type="text"]:focus {
+    border-color: #ffbc2d; /* Yellow border on focus */
+    box-shadow: 0 0 10px rgba(255, 188, 45, 0.5), 0 0 20px rgba(255, 188, 45, 0.3); /* Yellow box shadow on focus with multiple layers for the effect */
+  }
+  
+  .search-container button {
+    padding: 10px 15px;
+    background-color: #5f27cd; /* Purple background */
+    color: white;
+    border: none;
+    border-radius: 5px;
+    margin-left: 10px; /* Add some space between input and button */
+    cursor: pointer;
+    transition: background-color 0.3s ease; /* Smooth transition for background color */
+  }
+  
+  .search-container button:hover {
+    background-color: #4820a3; /* Darker purple on hover */
+  }
+
+
+/* Search results container styles */
+#searchResults {
+  position: absolute;
+  top: calc(100% + 10px); /* Position below the search bar */
+  left: 0;
+  width: calc(100% - 20px); /* Adjust width to fit the container */
+  max-height: 200px; /* Limit the height for scrollability */
+  overflow-y: auto; /* Enable vertical scrolling if needed */
+  background-color: #fff; /* White background */
+  border: 1px solid #ccc; /* Gray border */
+  border-radius: 5px; /* Rounded corners */
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Shadow effect */
+  z-index: 1000; /* Ensure it appears above other elements */
+}
+
+/* Individual search result item styles */
+.search-result-item {
+  padding: 10px;
+  cursor: pointer;
+  transition: background-color 0.3s ease; /* Smooth transition on hover */
+  border-bottom: 1px solid #ddd; /* Add border between items */
+}
+
+/* Last search result item style */
+.search-result-item:last-child {
+  border-bottom: none; /* Remove border for the last item */
+}
+
+.search-result-item:hover {
+  background-color: #f5f5f5; /* Light gray background on hover */
+}
+
+
+
+  
+  /* Scanning container styles */
+  .scanning-container {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 20px; /* Add some top margin for spacing */
+  }
+  
+  #scanner-container {
+    width: 300px; /* Adjust width as needed */
+    height: 300px; /* Adjust height as needed */
+    background-color: rgba(255, 255, 255, 0.7); /* White background with 70% opacity */
+    border-radius: 15px; /* Rounded corners */
+    box-shadow: 0 0 15px rgba(255, 255, 255, 0.5); /* Soft glow effect */
+  }
+  
+  /* Scanner button container styles */
+  .scanner-button-container {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px; /* Add some top margin for spacing */
+  }
+  
+  /* Scanner button styles */
+  #startScanBtn {
+    padding: 10px 20px;
+    background-color: #5f27cd; /* Purple background */
+    color: white;
+    border: none;
+    border-radius: 30px; /* Rounded corners to create an elliptical shape */
+    cursor: pointer;
+    font-size: 16px;
+    transition: background-color 0.3s ease; /* Smooth transition for background color */
+  }
+  
+  #startScanBtn:hover {
+    background-color: #4820a3; /* Darker purple on hover */
+  }
+
+/* Cart container styles */
+.cart-container {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    display: flex;
+    align-items: center;
+    background-color: #ffffff;
+    padding: 10px;
+    border-radius: 20px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+/* Cart icon styles */
+.cart-container .fas.fa-shopping-cart {
+    font-size: 24px;
+    color: #333333;
+    margin-right: 10px;
+}
+
+/* Cart title styles */
+.cart-container .cart-title {
+    margin-right: auto;
+}
+
+.cart-container .cart-title h2 {
+    margin: 0;
+    font-size: 18px;
+    color: #333333;
+}
+.item-count-circle {
+    margin-left: 10px ;
+}
+
+/* Item count circle styles */
+.cart-container .item-count-circle {
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    background-color: #59C173;
+    color: #ffffff;
+    font-size: 14px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
