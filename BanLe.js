@@ -39,8 +39,9 @@ function displayFilteredProducts(filteredProducts) {
 }
 
 // Function to fetch product info from product.json and display it in the product info box
-function displayProductInfo(product) {
-    const productInfoBox = document.getElementById('productInfoBox');
+// Function to display product information in the product info box
+function showPopup(product) {
+    // Get references to elements in the product info box
     const productName = document.getElementById('productName');
     const productImage = document.getElementById('productImage');
     const productPrice = document.getElementById('productPrice');
@@ -48,13 +49,15 @@ function displayProductInfo(product) {
 
     // Populate product info
     productName.textContent = product.Name;
-    productImage.src = product.Image; // Assuming there's an 'Image' property in product.json
-    productPrice.textContent = `Giá: ${product.Retail} đ`; // Assuming there's a 'Price' property in product.json
-    productDescription.textContent = `Miêu tả: ${product.Description}`; // Assuming there's a 'Description' property in product.json
+    productImage.src = product.Image;
+    productPrice.textContent = `Giá: ${product.Price} đ`;
+    productDescription.textContent = `Miêu tả: ${product.Description}`;
 
     // Display the product info box
+    const productInfoBox = document.getElementById('productInfoBox');
     productInfoBox.style.display = 'block';
 }
+
 
 // Function to close the product info box
 function closeProductInfoBox() {
@@ -77,13 +80,14 @@ document.addEventListener('click', function(event) {
     }
 });
 
-document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener('DOMContentLoaded', async function() {
     try {
-        loadProductData();
+        await loadProductData(); // Add await here
     } catch (error) {
         console.error('Error loading product data:', error);
     }
 });
+
 
 document.addEventListener('DOMContentLoaded', function () {
     const startScanBtn = document.getElementById('startScanBtn');
@@ -107,20 +111,50 @@ function startScanner() {
         }
         Quagga.start();
     });
+}
 
-    Quagga.onDetected(function (data) {
-        Quagga.stop();
-        const barcode = data.codeResult.code;
-        // Handle the scanned barcode (e.g., search for product info)
-        handleScannedBarcode(barcode);
-    });
+// Remove spaces and ensure the barcode is 13 digits long
+function preprocessBarcode(barcode) {
+    // Remove all spaces from the barcode
+    const processedBarcode = barcode.replace(/\s/g, '');
+    
+    // If the processed barcode is longer than 13 digits, take the first 13 digits
+    return processedBarcode.substring(0, 13);
 }
 
 function handleScannedBarcode(barcode) {
-    const productInfo = getProductInfo(barcode);
-    if (productInfo) {
-        showPopup(productInfo);
+    // Preprocess the scanned barcode to remove spaces and ensure it's 13 digits long
+    const processedBarcode = preprocessBarcode(barcode);
+
+    // Check if the processed barcode is 13 digits long
+    if (processedBarcode.length === 13) {
+        // Handle the processed barcode
+        const productInfo = getProductInfo(processedBarcode);
+        if (productInfo) {
+            showPopup(productInfo);
+        } else {
+            alert("Không tìm thấy sản phẩm!");
+        }
     } else {
-        alert("Không tìm thấy sản phẩm!");
+        alert("Barcode không hợp lệ!"); // Notify the user if the barcode is invalid
     }
+}
+
+// Function to handle the scanned barcode
+Quagga.onDetected(function (data) {
+    Quagga.stop();
+    const barcode = data.codeResult.code;
+    // Handle the scanned barcode
+    handleScannedBarcode(barcode);
+});
+
+
+// Function to retrieve product information based on the barcode
+function getProductInfo(barcode) {
+    // Assuming productData is an array containing product information
+    // Filter the productData array to find the product with matching barcode
+    const product = productData.find(product => product.Code === barcode);
+    
+    // Return the found product or null if not found
+    return product ? product : null;
 }
