@@ -101,7 +101,13 @@ function initializeScanner() {
     const startScanBtn = document.getElementById('startScanBtn');
     startScanBtn.addEventListener('click', startScanner);
 }
-
+function preprocessBarcode(barcode) {
+    // Remove all spaces from the barcode
+    const processedBarcode = barcode.replace(/\s/g, '');
+    
+    // If the processed barcode is longer than 13 digits, take the first 13 digits
+    return processedBarcode.substring(0, 13);
+}
 // Function to start the barcode scanner
 function startScanner() {
     loadingIndicator.style.display = 'block'; // Show loading indicator
@@ -123,15 +129,6 @@ function startScanner() {
         Quagga.start();
     });
     // Remove spaces and ensure the barcode is 13 digits long
- function preprocessBarcode(barcode) {
-    // Remove all spaces from the barcode
-    const processedBarcode = barcode.replace(/\s/g, '');
-    
-    // If the processed barcode is longer than 13 digits, take the first 13 digits
-    return processedBarcode.substring(0, 13);
-}
-
-
     Quagga.onDetected(function(data) {
         Quagga.stop();
         const barcode = data.codeResult.code;
@@ -144,6 +141,7 @@ function startScanner() {
         loadingIndicator.style.display = 'none'; // Hide loading indicator after scanning
     });
 }
+
 
 // Function to handle the scanned barcode
 function handleScannedBarcode(barcode) {
