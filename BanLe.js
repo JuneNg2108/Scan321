@@ -36,6 +36,11 @@ function displayFilteredProducts(filteredProducts) {
     searchResults.style.display = filteredProducts.length > 0 ? 'block' : 'none';
 }
 
+// Function to format price with commas for thousands separator
+function formatPrice(price) {
+    return price.toLocaleString('vi-VN'); // Using 'vi-VN' locale for Vietnamese format
+}
+
 
 // Function to fetch product info from product.json and display it in the product info box
 function showPopup(product) {
@@ -48,7 +53,7 @@ function showPopup(product) {
     // Populate product info
     productName.textContent = product.Name;
     productImage.src = product.Image;
-    productPrice.textContent = `Giá: ${product.Price} đ`;
+    productPrice.textContent = `Giá: ${formatPrice(product.Price)} đ`; // Format price here
     productDescription.textContent = `Miêu tả: ${product.Description}`;
 
     // Display the product info box
