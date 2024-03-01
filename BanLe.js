@@ -1,5 +1,3 @@
-// BanLe.js
-
 // Function to fetch product data from product.json
 async function loadProductData() {
     try {
@@ -28,7 +26,7 @@ function displayFilteredProducts(filteredProducts) {
         option.classList.add('search-result-item'); // Add class for styling
         option.addEventListener('click', () => {
             // Display selected product info
-            displayProductInfo(product);
+            showPopup(product); // Corrected function call
             // Clear search input and hide dropdown
             document.getElementById('searchInput').value = '';
             searchResults.innerHTML = '';
@@ -38,8 +36,8 @@ function displayFilteredProducts(filteredProducts) {
     searchResults.style.display = filteredProducts.length > 0 ? 'block' : 'none';
 }
 
+
 // Function to fetch product info from product.json and display it in the product info box
-// Function to display product information in the product info box
 function showPopup(product) {
     // Get references to elements in the product info box
     const productName = document.getElementById('productName');
@@ -58,42 +56,48 @@ function showPopup(product) {
     productInfoBox.style.display = 'block';
 }
 
-
 // Function to close the product info box
 function closeProductInfoBox() {
     const productInfoBox = document.getElementById('productInfoBox');
     productInfoBox.style.display = 'none';
 }
 
-// Event listener for search input
-const searchInput = document.getElementById('searchInput');
-searchInput.addEventListener('input', function() {
-    const query = searchInput.value;
-    const filteredProducts = filterProducts(query);
-    displayFilteredProducts(filteredProducts);
-});
+// Function to initialize search functionality
+function initializeSearch() {
+    const searchInput = document.getElementById('searchInput');
+    searchInput.addEventListener('input', function() {
+        const query = searchInput.value;
+        const filteredProducts = filterProducts(query);
+        displayFilteredProducts(filteredProducts);
+    });
 
-// Function to hide search results when clicked outside
-document.addEventListener('click', function(event) {
-    if (!event.target.closest('.search-container')) {
-        document.getElementById('searchResults').style.display = 'none';
-    }
-});
+    document.addEventListener('click', function(event) {
+        if (!event.target.closest('.search-container')) {
+            document.getElementById('searchResults').style.display = 'none';
+        }
+    });
+}
 
+// Event listener when the DOM content is loaded
 document.addEventListener('DOMContentLoaded', async function() {
     try {
-        await loadProductData(); // Add await here
+        await loadProductData(); // Wait for product data to be loaded
+        // Once data is loaded, execute other functions
+        initializeSearch();
+        initializeScanner();
     } catch (error) {
         console.error('Error loading product data:', error);
     }
 });
 
 
-document.addEventListener('DOMContentLoaded', function () {
+// Event listener for the start scan button
+function initializeScanner() {
     const startScanBtn = document.getElementById('startScanBtn');
     startScanBtn.addEventListener('click', startScanner);
-});
+}
 
+// Function to start the barcode scanner
 function startScanner() {
     Quagga.init({
         inputStream: {
@@ -122,6 +126,7 @@ function preprocessBarcode(barcode) {
     return processedBarcode.substring(0, 13);
 }
 
+// Function to handle the scanned barcode
 function handleScannedBarcode(barcode) {
     // Preprocess the scanned barcode to remove spaces and ensure it's 13 digits long
     const processedBarcode = preprocessBarcode(barcode);
@@ -147,7 +152,6 @@ Quagga.onDetected(function (data) {
     // Handle the scanned barcode
     handleScannedBarcode(barcode);
 });
-
 
 // Function to retrieve product information based on the barcode
 function getProductInfo(barcode) {
