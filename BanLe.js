@@ -104,36 +104,45 @@ function initializeScanner() {
 
 // Function to start the barcode scanner
 function startScanner() {
+    loadingIndicator.style.display = 'block'; // Show loading indicator
     Quagga.init({
         inputStream: {
             name: "Live",
             type: "LiveStream",
-            constraints: {
-                width: { min: 640 },
-                height: { min: 480 },
-                aspectRatio: { min: 1, max: 100 },
-                facingMode: "environment" // Use the device's rear camera
-            },
             target: document.querySelector('#scanner-container')
         },
         decoder: {
-            readers: ["ean_reader"] // Specify the barcode format to be EAN-13
+            readers: ["ean_reader"]
         }
-    }, function (err) {
+    }, function(err) {
         if (err) {
             console.error('Failed to initialize Quagga:', err);
+            loadingIndicator.style.display = 'none'; // Hide loading indicator in case of error
             return;
         }
         Quagga.start();
     });
-}
-// Remove spaces and ensure the barcode is 13 digits long
-function preprocessBarcode(barcode) {
+    // Remove spaces and ensure the barcode is 13 digits long
+ function preprocessBarcode(barcode) {
     // Remove all spaces from the barcode
     const processedBarcode = barcode.replace(/\s/g, '');
     
     // If the processed barcode is longer than 13 digits, take the first 13 digits
     return processedBarcode.substring(0, 13);
+}
+
+
+    Quagga.onDetected(function(data) {
+        Quagga.stop();
+        const barcode = data.codeResult.code;
+        const productInfo = getProductInfo(barcode);
+        if (productInfo) {
+            showPopup(productInfo);
+        } else {
+            alert("Không tìm thấy sản phẩm!");
+        }
+        loadingIndicator.style.display = 'none'; // Hide loading indicator after scanning
+    });
 }
 
 // Function to handle the scanned barcode
@@ -154,14 +163,6 @@ function handleScannedBarcode(barcode) {
         alert("Barcode không hợp lệ!"); // Notify the user if the barcode is invalid
     }
 }
-
-// Function to handle the scanned barcode
-Quagga.onDetected(function (data) {
-    Quagga.stop();
-    const barcode = data.codeResult.code;
-    // Handle the scanned barcode
-    handleScannedBarcode(barcode);
-});
 
 // Function to retrieve product information based on the barcode
 function getProductInfo(barcode) {
