@@ -110,7 +110,6 @@ function preprocessBarcode(barcode) {
 }
 // Function to start the barcode scanner
 function startScanner() {
-    loadingIndicator.style.display = 'block'; // Show loading indicator
     Quagga.init({
         inputStream: {
             name: "Live",
@@ -123,7 +122,6 @@ function startScanner() {
     }, function(err) {
         if (err) {
             console.error('Failed to initialize Quagga:', err);
-            loadingIndicator.style.display = 'none'; // Hide loading indicator in case of error
             return;
         }
         Quagga.start();
@@ -138,7 +136,6 @@ function startScanner() {
         } else {
             alert("Không tìm thấy sản phẩm!");
         }
-        loadingIndicator.style.display = 'none'; // Hide loading indicator after scanning
     });
 }
 
