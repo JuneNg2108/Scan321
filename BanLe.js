@@ -121,7 +121,6 @@ function startScanner() {
         Quagga.start();
     });
 }
-
 // Remove spaces and ensure the barcode is 13 digits long
 function preprocessBarcode(barcode) {
     // Remove all spaces from the barcode
