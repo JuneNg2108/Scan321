@@ -1,12 +1,17 @@
+let productData = []; // Initialize an empty array to hold product data
+
+
 // Function to fetch product data from product.json
 async function loadProductData() {
     try {
-        const response = await fetch('product.json'); // Fetch data from product.json
-        productData = await response.json(); // Parse JSON response
+        const response = await fetch('product.json'); 
+        productData = await response.json(); 
     } catch (error) {
         console.error('Failed to load product data:', error);
     }
 }
+
+
 
 // Function to filter products by name or code
 function filterProducts(query) {
@@ -84,16 +89,17 @@ function initializeSearch() {
 }
 
 // Event listener when the DOM content is loaded
-document.addEventListener('DOMContentLoaded', async function() {
-    try {
-        await loadProductData(); // Wait for product data to be loaded
+// Event listener when the DOM content is loaded
+document.addEventListener('DOMContentLoaded', function() {
+    loadProductData().then(() => {
         // Once data is loaded, execute other functions
         initializeSearch();
         initializeScanner();
-    } catch (error) {
+    }).catch(error => {
         console.error('Error loading product data:', error);
-    }
+    });
 });
+
 
 
 // Event listener for the start scan button
@@ -159,12 +165,18 @@ function handleScannedBarcode(barcode) {
     }
 }
 
-// Function to retrieve product information based on the barcode
+// Function to retrieve product information based on the barcode// Function to retrieve product information based on the barcode
 function getProductInfo(barcode) {
-    // Assuming productData is an array containing product information
-    // Filter the productData array to find the product with matching barcode
-    const product = productData.find(product => product.Code === barcode);
-    
-    // Return the found product or null if not found
-    return product ? product : null;
+    // Search for product information by barcode in the loaded JSON data
+    const product = productData.find(product => product.Code.toString() === barcode);
+    if (product) {
+        // Format the prices with dots for thousands separators and commas for decimal points
+        const formattedPrice = product.Price.toLocaleString('en-US', { style: 'currency', currency: 'VND' }).replace(/\./g, ',');
+        return {
+            id: product.Code, // Add product ID to identify items uniquely
+            title: product.Name,
+            Price: formattedPrice,
+        };
+    }
+    return null;
 }
